@@ -8,6 +8,17 @@ import time
 import torch.nn as nn
 import matplotlib.pyplot as plt
 import numpy as np
+
+# Set the font size variable
+font_size = 25
+
+# Apply the font size using rcParams
+plt.rcParams['xtick.labelsize'] = font_size
+plt.rcParams['ytick.labelsize'] = font_size
+plt.rcParams['axes.labelsize'] = font_size
+plt.rcParams['legend.fontsize'] = font_size
+
+
 class Processor():
     def __init__(self, args):
         self.args = args
@@ -241,12 +252,26 @@ class Processor():
 def plotter(sorted_ade,sorted_fde):
     fig1, axs1 = plt.subplots(1, 1, figsize=(10, 6))
     fig2, axs2 = plt.subplots(1, 1, figsize=(10, 6))
-    axs1.scatter(range(len(sorted_ade)), sorted_ade, s=4, label="ADE")
-    axs2.scatter(range(len(sorted_fde)), sorted_fde, s=5, label="FDE")
-    axs1.set_xlabel("Sorted Error Index")
-    axs1.set_ylabel("ADE")
-    axs2.set_xlabel("Sorted Error Index")
-    axs2.set_ylabel("FDE")
+    axs1.scatter(range(len(sorted_ade)), sorted_ade, s=15, label="ADE")
+    axs2.scatter(range(len(sorted_fde)), sorted_fde, s=15, label="FDE")
+    axs1.set_xlabel("Predictions sorted w.r.t. ADE")
+    axs1.set_ylabel("ADE (m)")
+    axs2.set_xlabel("Predictions sorted w.r.t. FDE")
+    axs2.set_ylabel("FDE (m)")
     axs1.legend()
     axs2.legend()
+    dpi = 400  # Replace with the desired DPI value (higher DPI for higher resolution)
+    
+    filename1 = f"results/ADE.png"  # Replace with the desired filename and format
+    fig1.set_size_inches(15, 10)
+    fig1.tight_layout()
+    # Use the savefig method to save the figure
+    fig1.savefig(filename1, dpi=dpi)
+
+    filename2 = f"results/FDE.png"  # Replace with the desired filename and format
+    fig2.set_size_inches(15, 10)
+    fig2.tight_layout()
+    # Use the savefig method to save the figure
+    fig2.savefig(filename2, dpi=dpi)
+
     plt.show()
